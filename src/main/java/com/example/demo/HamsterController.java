@@ -62,11 +62,10 @@ public class HamsterController {
      * @return List of hamsters above the age of one
      */
     @GetMapping("/hamsters/older")
-    public Object getOlderHamsters(@RequestParam(name = "age", defaultValue = "1.0") double age) {
-        return new ResponseEntity<>(hamsterService.getOlderHamsters(age), HttpStatus.OK);
+    public Object getHamstersByAge(@RequestParam(name = "age", defaultValue = "1.0") double age) {
+        return new ResponseEntity<>(hamsterService.getHamstersByAge(age), HttpStatus.OK);
 
     }
-
     /**
      * Endpoint to add a new hamster
      *
