@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
