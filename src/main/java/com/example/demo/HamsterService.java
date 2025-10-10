@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class HamsterService {
 
@@ -70,7 +72,38 @@ public class HamsterService {
     * @param hamsterID The ID of the hamster to delete
     */
     public void deleteHamster (Long hamsterId) {
-        return hamsterRepository.deleteById(hamsterId);
+        hamsterRepository.deleteById(hamsterId);
     }
 
+    /**
+   * Method to write a hamster object to a JSON file
+   *
+   * @param hamster The hamster object to write
+   */
+    public String writeJson(Hamster hamster) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+        objectMapper.writeValue(new File("students.json"), hamster);
+        return "Student written to JSON file successfully";
+        } catch (IOException e) {
+        e.printStackTrace();
+        return "Error writing student to JSON file";
+        }
+
+    }
+
+    /**
+     * Method to read a hamster object from a JSON file
+     *
+     * @return The hamster object read from the JSON file
+     */
+    public Object readJson() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+        return objectMapper.readValue(new File("students.json"), Hamster.class);
+        } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+        }
+    }
 }
