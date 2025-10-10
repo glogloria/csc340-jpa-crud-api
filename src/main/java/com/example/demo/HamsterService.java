@@ -1,17 +1,19 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-@Serivce
+@Service
 public class HamsterService {
 
     @Autowired
     private HamsterRepository hamsterRepository;
 
-    /* 
+    /**
     * Method to get all hamsters
     * @return list of all hamsters
     */
@@ -19,7 +21,7 @@ public class HamsterService {
         return hamsterRepository;
     }
 
-    /*
+    /**
     * Method to get a hamster by ID
     * @param hamsterID: the ID of the hamster to retrieve
     * @return The hamster with the matching ID
@@ -28,16 +30,16 @@ public class HamsterService {
         return hamsterRepository.findById(hamsterID).orElse(null);
     }
 
-    /* 
+    /**
     * Method to get hamsters by name
     * @param name: the name of the hamster
     * @return The list of hamsters with the matching name
     */
-    public Object getHamsterByName(String name) {
+    public Object getHamstersByName(String name) {
         return hamsterRepository.getHamstersByName(name);
     }
 
-    /* 
+    /**
     * Method to get older hamsters (above the age of one)
     * param age
     * @return the list of af hamsters matching the age criteria
@@ -46,7 +48,7 @@ public class HamsterService {
         return hamsterRepository.getHamstersByAge(age);
     }
 
-    /*
+    /**
     * Method to add a new hamster
     * @param hamster: the hamster to add
     */
@@ -54,7 +56,7 @@ public class HamsterService {
         return hamsterRepository.save(hamster);
     }
 
-    /*
+    /**
     *Method to update a hamster
     *param hamsterID: The ID of the hamster to update
     *param hamster: The hamster to update
@@ -63,7 +65,7 @@ public class HamsterService {
         return hamsterRepository.save(hamster);
     }
 
-    /*
+    /**
     * Method to delete a hamster
     * @param hamsterID The ID of the hamster to delete
     */
