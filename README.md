@@ -137,7 +137,7 @@ Delete an existing student
 **Parameters**
 - Path variable: hamsterID <integer> - REQUIRED 
 **Response - The updated list of Hamsters**
-``
+```
  {
    "hamsterId": 1,
    "name": "Willow",
@@ -152,4 +152,4 @@ Delete an existing student
   "description": "Loves corn",
   "breed": "Syrian"
 }
-``
+```
