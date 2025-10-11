@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class HamsterController {
 
@@ -99,7 +101,8 @@ public class HamsterController {
     @DeleteMapping("/hamsters/{id}")
     public Object deleteHamster(@PathVariable Long id) {
         hamsterService.deleteHamster(id);
-        return hamsterService.getAllHamsters();
+        List<Hamster> remainingHamsters = hamsterService.getAllHamsters();
+        return ResponseEntity.ok(remainingHamsters);
     }
 
     /**
