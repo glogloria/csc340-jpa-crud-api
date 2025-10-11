@@ -65,6 +65,7 @@ public class HamsterService {
     *param hamster: The hamster to update
     */
     public Hamster updateHamster(Long hamsterId, Hamster hamster) {
+        hamster.setHamsterId(hamsterId);
         return hamsterRepository.save(hamster);
     }
 
@@ -72,8 +73,8 @@ public class HamsterService {
     * Method to delete a hamster
     * @param hamsterID The ID of the hamster to delete
     */
-    public void deleteHamster (Long id) {
-        hamsterRepository.deleteById(id);
+    public void deleteHamster (Long hamsterId) {
+        hamsterRepository.deleteById(hamsterId);
     }
 
     /**
