@@ -59,7 +59,7 @@ public class HamsterController {
      * Endpoint to get hamsters with age above one
      *
      * @param age The age threshold for hamsters
-     * @return List of hamsters above the age of one
+     * @return List of hamsters of the specified age
      */
     @GetMapping("/hamsters/older")
     public Object getHamstersByAge(@RequestParam(name = "age", defaultValue = "1.0") double age) {
