@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,7 +86,6 @@ public class HamsterService {
         objectMapper.writeValue(new File("students.json"), hamster);
         return "Student written to JSON file successfully";
         } catch (IOException e) {
-        e.printStackTrace();
         return "Error writing student to JSON file";
         }
 
@@ -102,7 +101,6 @@ public class HamsterService {
         try {
         return objectMapper.readValue(new File("students.json"), Hamster.class);
         } catch (IOException e) {
-        e.printStackTrace();
         return null;
         }
     }
