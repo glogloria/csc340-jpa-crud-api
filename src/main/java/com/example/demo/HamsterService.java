@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class HamsterService {
     * Method to get all hamsters
     * @return list of all hamsters
     */
-    public Object getAllHamsters() {
-        return hamsterRepository;
+    public List<Hamster> getAllHamsters() {
+        return hamsterRepository.findAll();
     }
 
     /**
@@ -71,8 +72,8 @@ public class HamsterService {
     * Method to delete a hamster
     * @param hamsterID The ID of the hamster to delete
     */
-    public void deleteHamster (Long hamsterId) {
-        hamsterRepository.deleteById(hamsterId);
+    public void deleteHamster (Long id) {
+        hamsterRepository.deleteById(id);
     }
 
     /**
@@ -83,8 +84,8 @@ public class HamsterService {
     public String writeJson(Hamster hamster) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-        objectMapper.writeValue(new File("students.json"), hamster);
-        return "Student written to JSON file successfully";
+        objectMapper.writeValue(new File("hamsters.json"), hamster);
+        return "Hamster written to JSON file successfully";
         } catch (IOException e) {
         return "Error writing student to JSON file";
         }
@@ -99,7 +100,7 @@ public class HamsterService {
     public Object readJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-        return objectMapper.readValue(new File("students.json"), Hamster.class);
+        return objectMapper.readValue(new File("hamsters.json"), Hamster.class);
         } catch (IOException e) {
         return null;
         }
