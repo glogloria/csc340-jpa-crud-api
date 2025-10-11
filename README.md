@@ -117,6 +117,7 @@ Update an existing hamster
 - Path variable: hamsterId <integer> - REQUIRED
 **Request body**
 A hamster object with the updates
+```
 {
   "hamsterId" = 3,
   "name": "Dwindle",
@@ -124,7 +125,9 @@ A hamster object with the updates
   "description": "Loves running",
   "breed": "Chinese dwarf hamster"
 }
+```
 **Respone - The updated Hamster object**
+```
 {
   "hamsterId" = 3,
   "name": "Dwindle",
@@ -132,6 +135,7 @@ A hamster object with the updates
   "description": "Loves running",
   "breed": "Chinese dwarf hamster"
 }
+```
 7. /{studentId} (DELETE)
 Delete an existing student
 **Parameters**
