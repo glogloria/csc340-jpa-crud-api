@@ -1,9 +1,12 @@
 
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
-@RestController
+@Controller
 public class HamsterController {
 
     @Autowired
@@ -26,9 +27,11 @@ public class HamsterController {
     * 
     * @return List of all hamsters
     */
-    @GetMapping("/hamsters")
-    public Object getAllHamsters() {
-        return hamsterService.getAllHamsters();
+    @GetMapping({"/hamsters", "/hamsters/"})
+    public Object getAllHamsters(Model model) {
+        model.addAttribute("hamstersList", hamsterService.getAllHamsters());
+        model.addAttribute("title", "All Hamsters");
+        return "hamsters-list";
     }
 
     /**
@@ -38,8 +41,10 @@ public class HamsterController {
     * @return The hamster with the specified ID
     */
     @GetMapping("/hamsters/{id}")
-    public Hamster getHamsterByID(@PathVariable long id) {
-        return hamsterService.getHamsterByID(id);
+    public String getHamsterByID(@PathVariable long id, Model model) {
+        model.addAttribute("hamster", hamsterService.getHamsterByID(id));
+        model.addAttribute("title", "Hamster #: " + id);
+        return "hamster-details";
     }
 
     /**
@@ -49,12 +54,27 @@ public class HamsterController {
     * @return List of hamsters with the specified name
     */
     @GetMapping("/hamsters/name")
-    public Object getHamstersByName(@RequestParam String key) {
+    public Object getHamstersByName(@RequestParam String key, Model model) {
         if (key != null) {
-            return hamsterService.getHamstersByName(key);
+            model.addAttribute("hamstersList", hamsterService.getHamstersByName(key));
+            model.addAttribute("title", "Hamsters By Name: " + key);
+            return "hamsters-list";
         } else {
-            return hamsterService.getAllHamsters();
+            return "redirect:/hamsters/";
         }
+    }
+
+    /**
+     * 
+     * @param breed
+     * @param breed THe breed to search for
+     * @return List of hamsters with the specified breed
+     */
+    @GetMapping("/hamsters/breed/{breed}")
+    public Object getHamstersByBreed(@PathVariable String breed, Model model) {
+        model.addAttribute("hamstersList", hamsterService.getHamstersByBreed(breed));
+        model.addAttribute("title", "Hamsters By BReed: " + breed);
+        return "hamsters-list";
     }
 
     /**
@@ -64,9 +84,23 @@ public class HamsterController {
      * @return List of hamsters of the specified age
      */
     @GetMapping("/hamsters/older")
-    public Object getHamstersByAge(@RequestParam(name = "age", defaultValue = "1.0") double age) {
-        return new ResponseEntity<>(hamsterService.getHamstersByAge(age), HttpStatus.OK);
+    public Object getHamstersByAge(@RequestParam(name = "age", defaultValue = "1.0") double age, Model model) {
+        model.addAttribute("hamstersList", hamsterService.getHamstersByAge(age));
+        model.addAttribute("title", "Hamsters By Age: " + age);
+        return "hamsters-list";
+    }
 
+    /**
+     * Endpoint to show the create form for a new student
+     * 
+     * @param model the model to add the attributes to
+     * @return The view name for the create form
+     */
+    public Object showCreateForm(Model model) {
+        Hamster hamster = new Hamster();
+        model.addAttribute("hamster", hamster);
+        model.addAttribute("title", "Create New Hamster");
+        return "hamsters-create";
     }
     /**
      * Endpoint to add a new hamster
@@ -75,8 +109,21 @@ public class HamsterController {
      * @return List of all hamsters
      */
     @PostMapping("/hamsters")
-    public Object addStudent(@RequestBody Hamster hamster) {
-        return hamsterService.addHamster(hamster);
+    public Object addStudent(Hamster hamster, @RequestParam MultipartFile picture) {
+        Hamster newHamster = hamsterService.addHamster(hamster, picture);
+        return "redirect:/hamsters/" + newHamster.getHamsterId();
+    }
+
+    /**
+     * @param id    The id of the hamster to update
+     * @param model The model to add attributes to
+     * @return      The view name for the update form
+     */
+    public Object showUpdateForm(@PathVariable Long id, Model model) {
+        Hamster hamster = hamsterService.getHamsterById(id);
+        model.addAttribute("hamster", hamster);
+        model.addAttribute("title", "Update Hamster: " + id);
+        return "hamster-update";
     }
 
     /**
@@ -86,10 +133,11 @@ public class HamsterController {
      * @param hamster The updated hamster information
      * @return The updated hamster
      */
-    @PutMapping("/hamsters/{id}")
-    public Hamster updateHamster(@PathVariable Long id, @RequestBody Hamster hamster) {
-        hamsterService.updateHamster(id, hamster);
-        return hamsterService.getHamsterByID(id);
+    // @PutMapping("/hamsters/{id}")
+    @PostMapping("/hamsters/update/{id}")
+    public Hamster updateHamster(@PathVariable Long id, Hamster hamster, @RequestParam MultipartFile picture) {
+        hamsterService.updateHamster(id, hamster, picture);
+        return "redirect:/hamsters/" + id;
     }
 
     /**
@@ -98,33 +146,11 @@ public class HamsterController {
      * @param id The ID of the hamster to delete
      * @return List of all hamsters
      */
-    @DeleteMapping("/hamsters/{id}")
+    // @DeleteMapping("/hamsters/{id}")
+    @GetMapping("/hamsters/delete/{id}")
     public Object deleteHamster(@PathVariable Long id) {
         hamsterService.deleteHamster(id);
-        List<Hamster> remainingHamsters = hamsterService.getAllHamsters();
-        return ResponseEntity.ok(remainingHamsters);
-    }
-
-    /**
-     * Endpoint to write a hamster to a JSON file
-     *
-     * @param hamster The hamster to write
-     * @return An empty string indicating success
-     */
-    @PostMapping("/hamsters/writeFile")
-    public Object writeJson(@RequestBody Hamster hamster) {
-        return hamsterService.writeJson(hamster);
-    }
-
-    /**
-     * Endpoint to read a JSON file and return its contents
-     *
-     * @return The contents of the JSON file
-     */
-    @GetMapping("/hamsters/readFile")
-    public Object readJson() {
-        return hamsterService.readJson();
-
+        return "redirect:/hamsters";
     }
 
 }
