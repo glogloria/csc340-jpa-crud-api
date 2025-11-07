@@ -9,6 +9,7 @@ import java.util.List;
 public interface  HamsterRepository extends JpaRepository<Hamster, Long> {
 
     List<Hamster> getHamstersByAge(double age);
+    List<Hamster> getHamstersByBreed(String breed);
 
     @Query(value= "select * from hamsters h where h.age >= 1", nativeQuery = true)
     List<Hamster> getOlderHamsters(double age);
