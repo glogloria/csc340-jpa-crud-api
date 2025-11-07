@@ -21,18 +21,28 @@ public class Hamster {
     private String description;
 
     private String breed;
-
     private double age;
+
+    private String hamsterImagePath;
 
     public Hamster(){
     }
 
-    public Hamster(Long hamsterId, String name, String description, String breed, double age) {
+    public Hamster(Long hamsterId, String name, String description, String breed, double age, String hamsterImagePath) {
         this.hamsterId = hamsterId;
         this.name = name;
         this.description = description;
         this.breed = breed;
         this.age = age;
+        this.hamsterImagePath = hamsterImagePath;
+    }
+
+     public Hamster(String name, String description, String breed, double age, String hamsterImagePath) {
+        this.name = name;
+        this.description = description;
+        this.breed = breed;
+        this.age = age;
+        this.hamsterImagePath = hamsterImagePath;
     }
 
     public void setHamsterId(Long hamsterId) {
@@ -73,6 +83,14 @@ public class Hamster {
 
     public double getAge() {
         return age;
+    }
+
+    public String getHamsterImagePath() {
+        return hamsterImagePath;
+    }
+
+    public void setHamsterImagePath(String hamsterImagePath) {
+        this.hamsterImagePath = hamsterImagePath;
     }
 
 }
