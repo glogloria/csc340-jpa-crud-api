@@ -1,18 +1,12 @@
 
 package com.example.demo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +36,7 @@ public class HamsterController {
     */
     @GetMapping("/hamsters/{id}")
     public String getHamsterByID(@PathVariable long id, Model model) {
-        model.addAttribute("hamster", hamsterService.getHamsterByID(id));
+        model.addAttribute("hamster", hamsterService.getHamsterById(id));
         model.addAttribute("title", "Hamster #: " + id);
         return "hamster-details";
     }
@@ -96,6 +90,7 @@ public class HamsterController {
      * @param model the model to add the attributes to
      * @return The view name for the create form
      */
+    @GetMapping("/hamsters/createForm")
     public Object showCreateForm(Model model) {
         Hamster hamster = new Hamster();
         model.addAttribute("hamster", hamster);
@@ -119,6 +114,7 @@ public class HamsterController {
      * @param model The model to add attributes to
      * @return      The view name for the update form
      */
+    @GetMapping("/hamsters/updateForm/{id}")
     public Object showUpdateForm(@PathVariable Long id, Model model) {
         Hamster hamster = hamsterService.getHamsterById(id);
         model.addAttribute("hamster", hamster);
@@ -135,7 +131,7 @@ public class HamsterController {
      */
     // @PutMapping("/hamsters/{id}")
     @PostMapping("/hamsters/update/{id}")
-    public Hamster updateHamster(@PathVariable Long id, Hamster hamster, @RequestParam MultipartFile picture) {
+    public Object updateHamster(@PathVariable Long id, Hamster hamster, @RequestParam MultipartFile picture) {
         hamsterService.updateHamster(id, hamster, picture);
         return "redirect:/hamsters/" + id;
     }
