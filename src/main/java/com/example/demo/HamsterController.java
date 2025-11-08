@@ -38,7 +38,7 @@ public class HamsterController {
     public String getHamsterByID(@PathVariable long id, Model model) {
         model.addAttribute("hamster", hamsterService.getHamsterById(id));
         model.addAttribute("title", "Hamster #: " + id);
-        return "hamster-details";
+        return "hamsters-details";
     }
 
     /**
@@ -119,7 +119,7 @@ public class HamsterController {
         Hamster hamster = hamsterService.getHamsterById(id);
         model.addAttribute("hamster", hamster);
         model.addAttribute("title", "Update Hamster: " + id);
-        return "hamster-update";
+        return "hamsters-update";
     }
 
     /**
