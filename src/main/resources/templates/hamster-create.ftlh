@@ -35,22 +35,15 @@
 
     <h2 style="text-align: center"> Show us your hamster!</h2>
     <div class="add-animal-container">
-        <form action="#">
-
-            <label for="animal-name">Name</label>
-            <input type="text" id="animal-name" name="animalName" placeholder="Enter their name">
-
-            <label for="animal-breed">Breed</label>
-            <input type="text" id="animal-breed" name="animalBreed" placeholder="Enter their breed">
-
-            <label for="image-url">Image URL</label>
-            <input type="text" id="image-url" name="imageURL" placeholder="Link an image of them">
-
-            <label for="animal-description">Description</label>
-            <textarea id="animal-description" name="animal-description" placeholder="Describe their personality" style="height:200px"></textarea>
-
+        <form id="new-hamster" action="/hamsters" method="post" enctype="multipart/form-data">
+            <input type="text" id="name" name="name" placeholder="Name">
+            <input type="text" id="breed" name="breed" placeholder="Breed">
+            <input type="number" id="age" name="age" placeholder="Age">
+            <textarea id="description" name="description" placeholder="Description" style="height:200px"></textarea>
+            <label for="picture">Upload a picture of your hamster!</label>
+            <input type="file" id="picture" name="picture" accept="image/png, image/jpeg">    
             <input type="submit" value="Submit">
-
+            <a href="/hamsters" class="btn btn-outline-danger" >Cancel</a>
         </form>
     </div>
 
