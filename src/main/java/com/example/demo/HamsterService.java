@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class HamsterService {
@@ -60,9 +57,19 @@ public class HamsterService {
     }
 
     /**
+     * Returns a list of hamsters by their breed
+     * @param breed
+     * @return
+     */
+    public Object getHamstersByBreed(String breed) {
+        return hamsterRepository.getHamstersByBreed(breed);
+    }
+
+    /**
     * Method to add a new hamster
     * @param hamster: the hamster to add
     */
+    @SuppressWarnings("UseSpecificCatch")
     public Hamster addHamster(Hamster hamster, MultipartFile hamsterImage) {
         Hamster newHamster = hamsterRepository.save(hamster);
         String originalFileName = hamsterImage.getOriginalFilename();
@@ -90,6 +97,7 @@ public class HamsterService {
     *param hamsterID: The ID of the hamster to update
     *param hamster: The hamster to update
     */
+    @SuppressWarnings("UseSpecificCatch")
     public Hamster updateHamster(Long hamsterId, Hamster hamster, MultipartFile hamsterImage) {
         String originalFileName = hamsterImage.getOriginalFilename();
 
@@ -105,7 +113,10 @@ public class HamsterService {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
                 hamster.setHamsterImagePath(fileName);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return hamsterRepository.save(hamster);
     }
 
     /**
