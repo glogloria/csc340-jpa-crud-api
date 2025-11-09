@@ -2,9 +2,6 @@
 ## Link to demo
 https://uncg-my.sharepoint.com/:v:/g/personal/agsukidi_uncg_edu/EatTC-Jy7MFPnVIXlirjB_sBjTWdXDXd8CWd2VNKSrjwNw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=3KquO2
 
-## Link to full stack website application demo
-https://uncg-my.sharepoint.com/:v:/g/personal/agsukidi_uncg_edu/EXerOb7wi_VMmyysxEGCY0ABuVAE1YMUDwngvGsIWzrKhg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=uCjpk3
-
 ## Installation
 - Get the project
 - - clone
