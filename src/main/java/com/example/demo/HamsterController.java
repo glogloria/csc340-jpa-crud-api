@@ -67,7 +67,7 @@ public class HamsterController {
     @GetMapping("/hamsters/breed/{breed}")
     public Object getHamstersByBreed(@PathVariable String breed, Model model) {
         model.addAttribute("hamstersList", hamsterService.getHamstersByBreed(breed));
-        model.addAttribute("title", "Hamsters By BReed: " + breed);
+        model.addAttribute("title", "Hamsters By Breed: " + breed);
         return "hamsters-list";
     }
 
