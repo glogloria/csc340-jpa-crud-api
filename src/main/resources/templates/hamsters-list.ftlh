@@ -21,13 +21,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="about.html">About <span class="sr-only"></span></a>
+                <a class="nav-link" href="/hamsters">Home<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="details.html">Details</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="new-animal-form.html">Add New Animal</a>
+                <a class="nav-link" href="/hamsters/createForm">Add Hamster</a>
             </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" style="display: flex" style="flex-flow: row nowrap">
@@ -52,6 +49,7 @@
                 <th>Name</th>
                 <th>Breed</th>
             </tr>
+            
             <#list hamstersList as hamster>
             <tr>
                 <td>

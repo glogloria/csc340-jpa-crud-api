@@ -18,13 +18,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home<span class="sr-only"></span></a>
+                <a class="nav-link" href="/hamsters">Home<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="/hamsters/createForm">Add Hamster</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="new-animal-form.html">Add New Animal</a>
+                <a class="nav-link" href="/hamsters/updateForm/${hamster.hamsterId?c}">Update Hamster</a>
             </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" style="display: flex" style="flex-flow: row nowrap">
@@ -38,7 +38,7 @@
         <h1>${title}</h1>
         <div class="card">
             <h5>${hamster.name}</h5>
-            <img src="/hamster-images/${(hamster.hamsterImagePath)!'avatar.png'}" width="400px" height="300px">
+            <img src="/hamster-images/${(hamster.hamsterImagePath)!'No_Image_Available.jpg'}" width="400px" height="300px">
             <h2>Additional information:</h2>
             <p class="card-text">Name: ${hamster.name}</p>
             <p class="card-text">Breed: ${hamster.breed}</p>

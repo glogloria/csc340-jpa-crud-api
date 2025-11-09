@@ -17,13 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home<span class="sr-only"></span></a>
+                <a class="nav-link" href="/hamsters">Home<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="details.html">Details</a>
+                <a class="nav-link" href="/hamsters/createForm">Add Hamster</a>
             </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" style="display: flex" style="flex-flow: row nowrap">
@@ -36,9 +33,9 @@
     <h2 style="text-align: center"> Show us your hamster!</h2>
     <div class="add-animal-container">
         <form id="new-hamster" action="/hamsters" method="post" enctype="multipart/form-data">
-            <input type="text" id="name" name="name" placeholder="Name">
-            <input type="text" id="breed" name="breed" placeholder="Breed">
-            <input type="number" id="age" name="age" placeholder="Age">
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <input type="text" id="breed" name="breed" placeholder="Breed" required>
+            <input type="number" id="age" name="age" placeholder="Age" required>
             <label for="picture">Upload a picture of your hamster!</label>
             <input type="file" id="picture" name="picture" accept="image/png, image/jpeg">    
             <div class="animal-description">
