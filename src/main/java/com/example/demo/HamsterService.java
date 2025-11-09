@@ -1,25 +1,20 @@
 package com.example.demo;
 
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class HamsterService {
 
     @Autowired
     private HamsterRepository hamsterRepository;
-
-    private static final String UPLOAD_DIR = "src/main/resources/static/hamster-images/";
 
     /**
     * Method to get all hamsters
@@ -34,7 +29,7 @@ public class HamsterService {
     * @param hamsterID: the ID of the hamster to retrieve
     * @return The hamster with the matching ID
     */
-    public Hamster getHamsterById(@PathVariable long hamsterID) {
+    public Hamster getHamsterByID(@PathVariable long hamsterID) {
         return hamsterRepository.findById(hamsterID).orElse(null);
     }
 
@@ -57,39 +52,11 @@ public class HamsterService {
     }
 
     /**
-     * Returns a list of hamsters by their breed
-     * @param breed
-     * @return
-     */
-    public Object getHamstersByBreed(String breed) {
-        return hamsterRepository.getHamstersByBreed(breed);
-    }
-
-    /**
     * Method to add a new hamster
     * @param hamster: the hamster to add
     */
-    @SuppressWarnings("UseSpecificCatch")
-    public Hamster addHamster(Hamster hamster, MultipartFile hamsterImage) {
-        Hamster newHamster = hamsterRepository.save(hamster);
-        String originalFileName = hamsterImage.getOriginalFilename();
-
-        try {
-            if (originalFileName != null & originalFileName.contains(".")) {
-                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-                String fileName = String.valueOf(newHamster.getHamsterId()) + "." + fileExtension;
-                Path filePath = Paths.get(UPLOAD_DIR + fileName);
-
-                InputStream inputStream = hamsterImage.getInputStream();
-
-                Files.createDirectories(Paths.get(UPLOAD_DIR));
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-                newHamster.setHamsterImagePath(fileName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hamsterRepository.save(newHamster);
+    public Hamster addHamster(Hamster hamster) {
+        return hamsterRepository.save(hamster);
     }
 
     /**
@@ -97,25 +64,8 @@ public class HamsterService {
     *param hamsterID: The ID of the hamster to update
     *param hamster: The hamster to update
     */
-    @SuppressWarnings("UseSpecificCatch")
-    public Hamster updateHamster(Long hamsterId, Hamster hamster, MultipartFile hamsterImage) {
-        String originalFileName = hamsterImage.getOriginalFilename();
-
-        try {
-            if (originalFileName != null && originalFileName.contains(".")) {
-                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-                String fileName = String.valueOf(hamsterId) + "." + fileExtension;
-                Path filePath = Paths.get(UPLOAD_DIR + fileName);
-
-                InputStream inputStream = hamsterImage.getInputStream();
-
-                Files.createDirectories(Paths.get(UPLOAD_DIR));
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-                hamster.setHamsterImagePath(fileName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Hamster updateHamster(Long hamsterId, Hamster hamster) {
+        hamster.setHamsterId(hamsterId);
         return hamsterRepository.save(hamster);
     }
 
@@ -125,5 +75,35 @@ public class HamsterService {
     */
     public void deleteHamster (Long hamsterId) {
         hamsterRepository.deleteById(hamsterId);
+    }
+
+    /**
+   * Method to write a hamster object to a JSON file
+   *
+   * @param hamster The hamster object to write
+   */
+    public String writeJson(Hamster hamster) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+        objectMapper.writeValue(new File("hamsters.json"), hamster);
+        return "Hamster written to JSON file successfully";
+        } catch (IOException e) {
+        return "Error writing student to JSON file";
+        }
+
+    }
+
+    /**
+     * Method to read a hamster object from a JSON file
+     *
+     * @return The hamster object read from the JSON file
+     */
+    public Object readJson() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+        return objectMapper.readValue(new File("hamsters.json"), Hamster.class);
+        } catch (IOException e) {
+        return null;
+        }
     }
 }
